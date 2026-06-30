@@ -1,0 +1,40 @@
+# Core LLM Frameworks
+langchain
+langgraph
+langchain-community
+langchain-core
+
+# Choose ONE or MORE LLM providers
+langchain-groq
+langchain-google-genai
+langchain-openai
+
+# Streamlit UI
+streamlit
+
+# Environment Variables
+python-dotenv
+
+# YouTube Transcript
+youtube-transcript-api
+yt-dlp
+
+# Vector Database
+faiss-cpu
+chromadb
+
+# Embeddings
+sentence-transformers
+langchain-huggingface
+
+# Document Processing
+pypdf
+python-docx
+unstructured
+
+tiktoken
+pandas
+numpy
+requests
+pydantic
+
