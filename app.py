@@ -1,4 +1,6 @@
-from tools.youtube import get_transcript
+# from tools.youtube import get_transcript
+import asyncio
+from mcp_client import fetch_transcript
 from tools.embeddings import create_vectorstore
 from graph.workflow import workflow
 import streamlit as st
@@ -22,7 +24,10 @@ user_input = st.text_input(
 )
 
 if st.button("Run"):
-    transcript = get_transcript(url)
+    # transcript = get_transcript(url)
+    transcript = asyncio.run(
+        fetch_transcript(url)
+    )
     vector_store = create_vectorstore(transcript)
 
     state = {
@@ -32,8 +37,8 @@ if st.button("Run"):
         "question": user_input,
         "result": ""
     }
-
-    result = workflow.invoke(state)
+    with st.spinner("Processing..."):
+        result = workflow.invoke(state)
 
     st.write(result["result"])
     print(result["result"])
