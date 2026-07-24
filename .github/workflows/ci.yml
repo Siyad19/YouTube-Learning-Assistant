@@ -45,13 +45,19 @@ jobs:
         run: |
           python -m compileall .
 
+      - name: Debug repository structure
+        run: |
+          pwd
+          ls -la
+          find . -maxdepth 2 -type f
+
       - name: Run Unit Tests
         run: |
-          PYTHONPATH=$GITHUB_WORKSPACE pytest tests -v
+          python -m pytest tests/ -v
 
       - name: Run Coverage
         run: |
-          pytest --cov=. --cov-report=term-missing
+          python -m pytest --cov=. --cov-report=term-missing
 
       - name: Build Docker Image
         run: |
