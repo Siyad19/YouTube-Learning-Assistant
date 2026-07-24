@@ -47,7 +47,7 @@ jobs:
 
       - name: Run Unit Tests
         run: |
-          pytest tests/ -v
+          PYTHONPATH=$GITHUB_WORKSPACE pytest tests -v
 
       - name: Run Coverage
         run: |
