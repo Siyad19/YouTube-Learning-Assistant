@@ -1,8 +1,8 @@
-# 🎥 YouTube Learning Assistant
+# YouTube Learning Assistant
 
 An AI-powered learning assistant that helps users understand YouTube videos by generating summaries, answering questions, and intelligently routing requests using LangGraph.
 
-This project was built incrementally to understand the fundamentals of **LLMs, RAG, LangChain, and LangGraph**. Instead of relying on high-level abstractions, the focus was on implementing each concept step by step.
+This project was built incrementally to understand the fundamentals of **LLMs, RAG, LangChain, LangGraph and MCP**. Instead of relying on high-level abstractions, the focus was on implementing each concept step by step.
 
 ---
 
@@ -27,6 +27,7 @@ This project was built incrementally to understand the fundamentals of **LLMs, R
 * HuggingFace Embeddings
 * Groq API (Llama)
 * YouTube Transcript API
+* Model Context Protocol
 
 ---
 
@@ -118,7 +119,7 @@ A **Router Node** understands the user's intent and directs the request to the a
 
 ### Workflow
 
-```text
+```
                  START
                     │
                     ▼
@@ -142,6 +143,60 @@ A **Router Node** understands the user's intent and directs the request to the a
 
 ---
 
+## 📌 Version 4 — MCP Integration
+
+The fourth version introduces Model Context Protocol (MCP) to make the YouTube transcript retrieval functionality available as a reusable tool for the AI workflow.
+
+Instead of directly handling transcript retrieval inside the application logic, the YouTube transcript functionality is exposed through an MCP server. The AI application can then interact with the MCP tool to retrieve transcript data when required.
+
+### Workflow
+                    USER
+                      │
+                      ▼
+                LangGraph Router
+                 /            \
+                ▼              ▼
+        Summary Agent       QA Agent
+                │              │
+                │              ▼
+                │        MCP Client
+                │              │
+                │              ▼
+                │        MCP Server
+                │              │
+                │              ▼
+                │      YouTube Transcript
+                │              │
+                └───────┬──────┘
+                        ▼
+                       LLM
+                        │
+                        ▼
+                      Output
+ ### MCP Tool
+
+The MCP server exposes a tool responsible for retrieving the transcript of a YouTube video.
+```
+get_youtube_transcript(url)
+          │
+          ▼
+YouTube Transcript API
+          │
+          ▼
+Transcript Text
+```
+The application can call this tool through the MCP protocol instead of tightly coupling the transcript retrieval logic to the main application.
+
+### Concepts Learned
+* Model Context Protocol (MCP)
+* MCP Client and MCP Server
+* MCP Tools
+* Tool-based AI workflows
+* Separating tools from application logic
+* AI agent and external tool communication
+* Integrating MCP with LangGraph
+
+---
 # 📂 Project Structure
 
 ```text
@@ -151,6 +206,8 @@ youtube-learning-assistant/
 ├── state.py
 ├── requirements.txt
 ├── .env
+├── mcp_client.py
+├── yt_mcp_server.py
 │
 ├── agents/
 │   ├── summary_agent.py
@@ -163,6 +220,10 @@ youtube-learning-assistant/
 ├── tools/
 │   ├── youtube.py
 │   └── embeddings.py
+│
+├── tests/
+│   ├── test_embeddings.py
+│   └── test_transcript.py
 │
 └── README.md
 ```
@@ -234,6 +295,10 @@ Through this project, I gained practical experience with:
 * Streamlit
 * LangGraph
 * Agent-Based Workflow Design
+* Model Context Protocol (MCP)
+* MCP Client and MCP Server
+* MCP Tool Integration
+* Tool-Based AI Workflows
 
 This project was built with the goal of understanding **how modern AI applications evolve—from a simple summarizer to a retrieval-based assistant and finally to an agentic workflow using LangGraph**.
 
