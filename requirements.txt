@@ -11,6 +11,6 @@ faiss-cpu
 sentence-transformers
 langchain-huggingface
 torchvision
-mcp
+mcp==1.28.1
 pytest
 pytest-asyncio
