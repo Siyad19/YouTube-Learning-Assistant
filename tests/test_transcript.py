@@ -1,5 +1,5 @@
 import pytest
-from mcp_client import fetch_transcript
+from mcp_tools.mcp_client import fetch_transcript
 
 @pytest.mark.asyncio
 async def test_fetch_transcript():

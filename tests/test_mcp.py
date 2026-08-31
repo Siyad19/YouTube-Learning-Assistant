@@ -1,4 +1,4 @@
-from mcp_client import fetch_description
+from mcp_tools.mcp_client import fetch_description
 
 async def test_mcp():
     url = "https://youtu.be/o4SSoURPODY?si=FWM8i7MayNYgyZd5"
