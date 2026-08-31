@@ -16,3 +16,5 @@ __pycache__/
 # Streamlit Secrets
 .streamlit/secrets.toml
 ```
+# Monitoring
+monitoring/*

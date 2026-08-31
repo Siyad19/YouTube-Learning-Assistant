@@ -1,5 +1,5 @@
 from langgraph.graph import StateGraph, START, END
-from state import State
+from graph.state import State
 from graph.router import router
 
 from agents.summary_agent import summarize

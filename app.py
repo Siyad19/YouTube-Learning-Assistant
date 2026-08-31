@@ -1,6 +1,6 @@
 # from tools.youtube import get_transcript
 import asyncio
-from mcp_client import fetch_transcript
+from mcp_tools.mcp_client import fetch_transcript
 from tools.embeddings import create_vectorstore
 from graph.workflow import workflow
 import streamlit as st
@@ -13,7 +13,7 @@ st.set_page_config(
 
 # Title and description
 st.title("YouTube Learning Assistant")
-st.write("Enter a English YouTube video URL to get its transcript and summary.")
+st.write("Enter a English YouTube video URL here.")
 
 # Input field for YouTube URL
 url = st.text_input("YouTube Video URL:")
@@ -31,6 +31,7 @@ if st.button("Run"):
     vector_store = create_vectorstore(transcript)
 
     state = {
+        "yt_url": url,
         "transcript": transcript,
         "vector_store": vector_store,
         "request": user_input,
@@ -38,7 +39,9 @@ if st.button("Run"):
         "result": ""
     }
     with st.spinner("Processing..."):
-        result = workflow.invoke(state)
+        result = asyncio.run(
+            workflow.ainvoke(state)
+        )
 
     st.write(result["result"])
     print(result["result"])
