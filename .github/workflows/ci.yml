@@ -35,6 +35,11 @@ jobs:
       - name: Install Dependencies
         run: |
           pip install -r requirements.txt
+      
+      - name: Check MCP version
+        run: |
+          pip show mcp
+          python -c "from mcp.server.fastmcp import FastMCP; print('FastMCP import successful')"
 
       - name: Install Testing Packages
         run: |
